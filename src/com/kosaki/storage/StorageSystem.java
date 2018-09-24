@@ -98,10 +98,6 @@ public class StorageSystem {
 
         boolean filefound = true;
 
-        //what the fuck?
-        //this is SO FUCKING DUMB
-        //IF A FILE CAN'T BE FOUND JUST CREATE IT
-        //THE DOCS LITERALLY SAY RANDOMACCESSFILES CAN CREATE FILES, FUCK OFF
         File f = new File("./catalogfiles/");
         if (!f.exists()){
             f.mkdir();
@@ -147,7 +143,7 @@ public class StorageSystem {
 
         catalog.seek(catalogHeaderOffset);
 
-        long entryposition = 0; //literally just saves me from writing the same code twice, REEEEEEEEEEEEEE
+        long entryposition = 0; //saves me from writing the same code twice
         int page = -1;
         boolean found = false;
 
@@ -240,7 +236,7 @@ public class StorageSystem {
 
         catalog.seek(catalogHeaderOffset);
 
-        long entryposition = 0; //literally just saves me from writing the same code twice, REEEEEEEEEEEEEE
+        long entryposition = 0; // saves me from writing the same code twice
         int page = -1;
         boolean found = false;
 
@@ -357,7 +353,7 @@ public class StorageSystem {
         catalog.seek(36); //the part that holds the number of pages
         int totalpages = catalog.readInt();
 
-        long entryposition = 0; //literally just saves me from writing the same code twice, REEEEEEEEEEEEEE
+        long entryposition = 0;
         boolean found = false;
 
         outerloop: //we want to break out of this one
@@ -442,9 +438,9 @@ public class StorageSystem {
 
                 typefile.seek(recordPos);
                 //header part
-                typefile.skipBytes(4); //fuck the primary key, it's empty right now
-                typefile.skipBytes(RECORD_FIELDNAME_MAX); //fuck the typename, that's irrelevant
-                typefile.skipBytes(4); //fuck the fields used too, this'll be filled later, just like the typename
+                typefile.skipBytes(4); //the primary key is empty right now
+                typefile.skipBytes(RECORD_FIELDNAME_MAX); //the typename's irrelevant
+                typefile.skipBytes(4); //the fields'll be filled later, just like the typename
 
                 boolean isFull = typefile.readBoolean();
                 boolean isEmpty = typefile.readBoolean(); //..these two are the same thing
@@ -540,7 +536,7 @@ public class StorageSystem {
 
         catalog.seek(catalogHeaderOffset);
 
-        long entryposition = 0; //literally just saves me from writing the same code twice, REEEEEEEEEEEEEE
+        long entryposition = 0;
         boolean found = false;
 
         outerloop: //we want to break out of this one
@@ -581,10 +577,10 @@ public class StorageSystem {
         int typefields = catalog.readInt();
         int typekeys = catalog.readInt();
 
-        String primarykey = getInputString("Enter the primary key of the record you want to delete! Do it, dummy!", 10);
+        String primarykey = getInputString("Enter the primary key of the record you want to delete!", 10);
         int keyval = Integer.parseInt(primarykey);
         while (keyval > typekeys){
-            primarykey = getInputString("There aren't even that many keys, what are you DOING? Just type a negative number to quit if you're so inclined, or try again!", 10);
+            primarykey = getInputString("Type a negative number to quit, or try again.", 10);
             keyval = Integer.parseInt(primarykey);
         }
 
@@ -621,9 +617,9 @@ public class StorageSystem {
 
                 typefile.seek(recordPos);
                 //header part
-                int writtenkey = typefile.readInt(); //fuck the primary key, it's empty right now
-                typefile.skipBytes(20); //fuck the typename, that's irrelevant
-                typefile.skipBytes(4); //fuck the fields used too, this'll be filled later, just like the typename
+                int writtenkey = typefile.readInt(); 
+                typefile.skipBytes(20); 
+                typefile.skipBytes(4); 
 
                 boolean isFull = typefile.readBoolean();
                 boolean isEmpty = typefile.readBoolean(); //..these two are the same thing
@@ -764,9 +760,9 @@ public class StorageSystem {
 
                 typefile.seek(recordPos);
                 //header part
-                int writtenkey = typefile.readInt(); //fuck the primary key, it's empty right now
-                typefile.skipBytes(20); //fuck the typename, that's irrelevant
-                typefile.skipBytes(4); //fuck the fields used too, this'll be filled later, just like the typename
+                int writtenkey = typefile.readInt(); //the primary key, is empty right now
+                typefile.skipBytes(20); //typename's irrelevant
+                typefile.skipBytes(4); //the fields'll be filled later, just like the typename
 
                 boolean isFull = typefile.readBoolean();
                 boolean isEmpty = typefile.readBoolean(); //..these two are the same thing
@@ -801,14 +797,14 @@ public class StorageSystem {
     }
 
     public void listRecords() throws IOException {
-        String typename = getInputString("Enter the type name that you want to see listed, and be hasty please. Oh, and keep it under 20 chars.", 20);
+        String typename = getInputString("Enter the type name that you want to see listed, and keep it under 20 chars.", 20);
 
         catalog.seek(36); //the part that holds the number of pages
         int totalpages = catalog.readInt();
 
         catalog.seek(catalogHeaderOffset);
 
-        long entryposition = 0; //literally just saves me from writing the same code twice, REEEEEEEEEEEEEE
+        long entryposition = 0;
         boolean found = false;
 
         outerloop: //we want to break out of this one
@@ -878,7 +874,7 @@ public class StorageSystem {
 
                 typefile.seek(recordPos);
                 //header part
-                int writtenkey = typefile.readInt(); //don't fuck the primary key actually
+                int writtenkey = typefile.readInt(); // the primary key is important this time actually
                 typefile.skipBytes(20); //typename
                 typefile.skipBytes(4); //fields used
 
@@ -957,7 +953,7 @@ public class StorageSystem {
                 typefile.writeInt(0);
             }
 
-            //the rest of the allocated space is nonexistent bullshit
+            //the rest of the allocated space is nonexistent
         }
     }
 
