@@ -1,4 +1,4 @@
-# faux-database-in-java
+# Storage Manager in Java
 A makeshift database manager designed to simulate modern databases, written in Java.
 
 # What it does
